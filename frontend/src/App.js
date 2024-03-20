@@ -4,7 +4,7 @@ const App = () => {
   const [data, setData] = useState([{}])
 
   useEffect(() => {
-    fetch("/member").then(
+    fetch("https://sipg-today.onrender.com/member").then(
       res => res.json()
     ).then(
       data => {
