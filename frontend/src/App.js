@@ -26,13 +26,9 @@ const App = () => {
   // }, [])
   return (
     <div>
-      {(typeof data.member === 'undefined')? (
-        <p>Loading...</p>
-      ):(
-        data.member.map((member, i ) => (
-          <p key={i}>{member}</p>
-        ))
-      )}
+     <h1>Should I Purchase Gold Today??</h1>
+     <h2>Gold Price Analysis</h2>
+     <h3>------------------------------------------------------------------------------------------------------------Development in Progress-------------------------------------------------------------------------------------------------------</h3>
     </div>
   )
 }
