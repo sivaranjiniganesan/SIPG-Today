@@ -1,0 +1,53 @@
+    .nav-content{
+    background: linear-gradient(90deg, #07553E 0%, #061C16 98.5%);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 2px;
+    display: flex;
+    flex-direction: row;
+    gap: 34%;
+    }
+
+    .nav-title{
+    font-family: monospace;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 32px;
+    line-height: 39px;
+
+    color: #F5F5F5;
+    }
+
+    .nav-subtitle{
+    font-family: monospace;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 24px;
+
+    color: #F5F5F5;
+    }
+
+    .Text{
+        display: flex;
+        flex-direction: column;
+        padding-left: 5%;
+        padding-top: 2%;
+        padding-bottom: 2%;
+    }
+
+    .nav-buttons-items{
+        display: flex;
+        flex-direction: row;
+        gap: 5%;
+        width: 116%;
+        list-style: none;
+        padding-top: 7%;
+        padding-bottom: 2%;
+        
+    }
+    .nav-buttons-items li a{
+        text-decoration: none;
+        color: #F5F5F5;
+        font-family: math;
+        font-size: x-large;
+    }

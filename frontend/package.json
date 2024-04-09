@@ -8,9 +8,14 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.6.8",
+    "highcharts": "^11.4.0",
+    "highcharts-react-official": "^3.2.1",
+    "moment": "^2.30.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-jsx-highstock": "^5.0.1",
     "react-scripts": "5.0.1",
+    "recharts": "^2.12.4",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
