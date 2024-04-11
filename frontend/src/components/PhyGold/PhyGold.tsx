@@ -4,16 +4,23 @@ import Highcharts from "highcharts/highstock";
 import "./PhyGold.css"
 
 
-const PhyGold = (datasource) => {
+const PhyGold = (datasource: any) => {
    
-    console.log(datasource.datasource)
   const options = {
+    sync: {
+      visibility: true,
+      highlight: true,
+      extremes: true,
+    },
+   
+    cell: 'dashboard-col-0',
+    type: 'Highcharts',
     chart:{
         height: 530,
         width: 900
     },
   title: {
-      text: 'Gold Price in India 2023 (24K, 22K, 18K, 14K & 10K)',
+      text: `Gold Price in India ${datasource.datasource[1000]} (24K, 22K, 18K, 14K & 10K)`,
       align: 'center'
   },
  
@@ -33,14 +40,14 @@ const PhyGold = (datasource) => {
   series: datasource.datasource
   };
   return (
-    <div id="container">
+    
       <HighchartsReact
         highcharts={Highcharts}
         constructorType={"stockChart"}
         options={options}
       />
       
-    </div>
+  
   )
 }
 

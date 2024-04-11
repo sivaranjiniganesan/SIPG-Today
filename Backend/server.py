@@ -2,6 +2,8 @@ from flask import Flask
 from flask_cors import CORS
 import csv
 import pandas as pd
+import requests
+from bs4 import BeautifulSoup as soup
 
 app = Flask(__name__)
 CORS(app)
@@ -39,10 +41,52 @@ def get_gold_price(file,year):
         })
     return series_data
 
-@app.route("/")
-def links():
-     
-        return {"Data Links":["https://sipg-today.onrender.com/gold-price","https://sipg-today.onrender.com/digital-gold-3months","https://sipg-today.onrender.com/digital-gold-years"]}
+def current_gold_rate(type):
+    url = "https://www.iifl.com/gold-rates-today/gold-rate-chennai"
+    req = requests.get(url)
+    req.raise_for_status()
+
+    # create Soup
+    page_soup = soup(req.text, 'html.parser')
+
+    gold_Rate_dict = {}
+    for val in page_soup.find_all('h4', {'class': 'gold-rate-box__title mb-0'}):
+        gold_Rate_dict[val.text] = []
+
+
+    def find_value(value):
+        for ran in range(len(value)):
+            if ran == 0 or ran == 1:
+                gold_Rate_dict['22K Gold'].append(value[ran].replace("₹","").replace(",","").replace(".00",""))
+            elif ran == 2 or ran == 3:
+                gold_Rate_dict['24K Gold'].append(value[ran].replace("₹","").replace(",","").replace(".00",""))
+
+    price = [i.text for i in  page_soup.find_all('span', {'class': 'd-block fw-500 text-truncate'})]
+    # change = [i.text.replace("\n","").replace("\u200c","").strip() for i in  page_soup.find_all('span', {'class': 'gold-rate-box__trends-up'})]
+
+    find_value(price)
+    # find_value(change)
+    last_10_data = []
+
+    table = page_soup.find_all('table')[2]
+    table_body = table.find('tbody')
+
+    rows = table_body.find_all('tr')
+    for row in rows:
+        cols = row.find_all('td')
+        cols = [ele.text.strip().replace("\n","").replace("\t","").replace("₹","").replace(",","") for ele in cols]
+        last_10_data.append([ele for ele in cols if ele]) 
+
+    if type == "today":
+        return gold_Rate_dict
+    else:
+        return last_10_data
+
+@app.route("/current-gold-price")
+def current_gold():
+        today = current_gold_rate("today")
+        last_10 = current_gold_rate("last_10_days")
+        return [{"Today":today,"last_10_days":last_10}]
 
 @app.route("/gold-price/2024")
 def gold_price_2024():
