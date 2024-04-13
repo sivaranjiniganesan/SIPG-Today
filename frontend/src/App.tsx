@@ -9,33 +9,6 @@ import Navbar from './components/Navbar/Navbar';
 
 export default function App() {
 
-//   const [today_Data, setCurrentData] = useState('')
-
-//   useEffect(()=>{
-//     axios.get(`http://localhost:5000/current-gold-price`).then(data => {
-//       setCurrentData(data.data.Today['22K Gold'][0])
-//       // console.log(data.data.Today['22K Gold'][0])
-      
-//     }).catch(error => {
-//       console.log(error)
-//     })
-
-//   }, [])
-// console.log(today_Data)
-// const [current_data, setCurrentData] = useState([{}])
-// // let current_data: {} as any
-// useEffect(()=>{
-//   axios.get('http://localhost:5000/current-gold-price').then(data => {
-//     setCurrentData(data.data)
-//   }).catch(error => {
-//     console.log(error)
-//   })
-
-// }, [])
-// const outerHtmlElement: any = current_data[0];
-// var Today_22 = outerHtmlElement.Today['22K Gold'][0];
-// console.log(Today_22)
-
 const [config,setConfig] = useState({})
 // let current_data: {} as any
 useEffect(()=>{
@@ -46,12 +19,17 @@ useEffect(()=>{
     var Today_24_1 = outerHtmlElement.Today['24K Gold'][0];
     var Today_24_10 = outerHtmlElement.Today['24K Gold'][1];
     let last_10: any = outerHtmlElement.last_10_days
+    var digigold = outerHtmlElement.digigold_today
+    var last_10_digigold = outerHtmlElement.digigold_last_10
     let last_10_22: any = []
     let last_10_24: any = []
+    console.log(last_10)
     Object.keys(last_10).map(key => {
       last_10_22.push(Number(last_10[key][1]))
    });
-   last_10_22 = last_10_22.slice(1)
+   console.log(last_10_22)
+  //  last_10_22 = last_10_22.slice(1)
+   console.log(last_10_digigold)
    Object.keys(last_10).map(key => {
     last_10_24.push(Number(last_10[key][2]))
  });
@@ -65,15 +43,35 @@ useEffect(()=>{
           valueFormat: '{value}',
           title: "Today's Gold Rate",
           subtitle: "Last 10 day's rate",
+         
           chartOptions: {
             series: [{
-              type: 'column',
+              type: 'line',
               enableMouseTracking: false,
               dataLabels: {
                   enabled: true
               },
               name: 'Last 6 months rate',
               data: last_10_22
+          }]
+        }
+        },
+        {
+          type: 'KPI',
+          cell: 'kpi-digigold-today',
+          value: digigold,
+          valueFormat: '{value}',
+          title: "Today's Digitial Gold Rate",
+          subtitle: "Last 10 day's rate",
+          chartOptions: {
+            series: [{
+              type: 'line',
+              enableMouseTracking: false,
+              dataLabels: {
+                  enabled: true
+              },
+              name: 'Last 6 months rate',
+              data: last_10_digigold
           }]
         }
         },
@@ -127,9 +125,7 @@ console.log(config)
     <div>
 
 <Navbar/>
-
-<Dashboard config={config} />
-     
+<Dashboard config={config} /> 
     </div>
   
 );

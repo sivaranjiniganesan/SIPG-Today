@@ -13,10 +13,10 @@ const Navbar = () => {
     
         <ul className="nav-buttons-items" >
                 <li>
-                    <a href='#container'>Physical Gold</a>
+                    <a href='#physical_gold'>Physical Gold</a>
                 </li>
                 <li>
-                    <a href='#digigold'>Digital Gold</a>
+                    <a href='#digital_gold'>Digital Gold</a>
                 </li>
                 <li>
                     <a href='#predict'>SIPG Today???</a>

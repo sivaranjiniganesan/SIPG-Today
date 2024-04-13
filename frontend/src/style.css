@@ -39,6 +39,31 @@ body {
   align-content: center;
   flex-wrap: wrap;
 }
+.digital_gold_wrapper{
+    display: flex;
+    flex-direction: row;
+    gap: 2%;
+    padding-left: 8%;
+    padding-top: 4%;
+}
+#digital_gold #single-wrapper3{
+  width: 557px;
+    padding-top: 1%;
+    margin-left: -75px;
+    display: flex;
+    flex-direction: column;
+    flex: 2 1;
+    align-content: center;
+    flex-wrap: wrap;
+ 
+}
+
+#physical_gold .row{
+  gap:2%;
+}
+#kpi-digigold-today{
+  width:100%
+}
 
 #aaa .highcharts-dashboards-component-kpi,#bbb .highcharts-dashboards-component-kpi{
   background-color: var(--highcharts-background-color);
@@ -72,7 +97,7 @@ h1#title {
 }
 
 #kpi-gold-today .highcharts-dashboards-component-title::before,
-#kpi-iron .highcharts-dashboards-component-title::before {
+#kpi-digigold-today .highcharts-dashboards-component-title::before {
   width: 14px;
   height: 14px;
   border-radius: 28px;
@@ -88,19 +113,19 @@ h1#title {
 }
 
 #kpi-gold-today .highcharts-dashboards-component-kpi-subtitle,
-#kpi-iron .highcharts-dashboards-component-kpi-subtitle {
+#kpi-digigold-today .highcharts-dashboards-component-kpi-subtitle {
   margin-top: 10px;
   font-size: 1.2em;
   color: var(--highcharts-neutral-color-60);
 }
 
 #kpi-gold-today .highcharts-dashboards-component-kpi,
-#kpi-iron .highcharts-dashboards-component-kpi {
+#kkpi-digigold-today .highcharts-dashboards-component-kpi {
   padding: 10px;
 }
 
 #kpi-gold-today .highcharts-dashboards-component-kpi-value,
-#kpi-iron .highcharts-dashboards-component-kpi-value {
+#kpi-digigold-today .highcharts-dashboards-component-kpi-value {
   font-size: 4em;
   line-height: 2.4rem;
   margin-top: 10px;
@@ -117,7 +142,7 @@ h1#title {
 }
 
 #kpi-gold-today .highcharts-dashboards-component-kpi-value::after,
-#kpi-iron .highcharts-dashboards-component-kpi-value::after {
+#kpi-digigold-today .highcharts-dashboards-component-kpi-value::after {
   content: 'Per Gram(22K)';
   display: block;
   font-size: 1rem;
@@ -181,14 +206,6 @@ h1#title {
   margin: 0.5em 2px;
 }
 
-#aaa, #ccc {
-  /* margin-right: -39px; */
-}
-
-#bbb, #ddd {
-  /* padding-left: 24px; */
-  /* padding-right: 7px; */
-}
 
 @media (max-width: 992px) {
   .row {
