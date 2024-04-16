@@ -4,6 +4,8 @@ import csv
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup as soup
+import datetime 
+import time
 
 app = Flask(__name__)
 CORS(app)
@@ -175,6 +177,44 @@ def gold_price_2017():
 @app.route("/digital-gold-years")
 def digital_gold_years():
     return get_data("mmtcpamp-digital-gold-price.csv")
+
+@app.route("/sipg-today/<type>/<int:date>")
+def sipg_today(date,type):
+    if type == "physical_gold":
+        file = "gold-price_epoch.csv"
+    df = pd.read_csv(file)
+
+    highest_since = df[df['date'] > date].max()
+    highest_since['date'] = datetime.datetime.fromtimestamp(highest_since['date']).strftime('%Y-%m-%d')
+
+    new_df = df[df['date'] > date].reset_index(drop=True)
+    epoch_time = int(time.time())
+    last_few_days = []
+    date_after = date+(30*84600) if date+(30*84600) < epoch_time else epoch_time
+    new_data = df[df["date"].between(date,date_after, inclusive = 'both')].reset_index(drop=True) 
+    # last_few_days['date'] = pd.to_datetime(last_few_days['date'], unit='s')
+   
+    series_data = []
+    for i in new_df.columns.tolist():
+        
+        if i!= "date":
+            data = []
+            for val in range(0,len(new_df['date'])):
+                
+                data.append({'x':int(new_df['date'][val] *1000),'y':int(new_df[i][val])})
+            series_data.append({
+                "data": data,
+                "name": i,
+                'type': 'spline'
+                })      
+            
+    new_df["date"] = new_df.date.apply(lambda d: datetime.datetime.fromtimestamp(int(d)).strftime("%Y-%m-%d"))
+    
+    for index, row in new_df.iterrows():
+        last_few_days.append([row['date'],row['Gold Price(24 Karat)'],row['Gold Price(22 Karat)'],row['Gold Price(18 Karat)'],row['Gold Price(14 Karat)'],row['Gold Price(10 Karat)']])
+    print(last_few_days)
+    return [{"Linechart_data":series_data,'highest':highest_since.to_dict(),'last_few_days':last_few_days}]
+
 
 if __name__ == "__main__":
     app.run(debug=True)

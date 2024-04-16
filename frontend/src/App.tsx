@@ -3,13 +3,15 @@ import React, { useState, useEffect} from 'react'
 import './style.css';
 import Dashboard from './Dashboard';
 import Navbar from './components/Navbar/Navbar';
-
-
-
+import DigiGoldDashboard from "./DigiGoldDashboard";
+import PhyGoldDashboard from "./PhyGoldDashboard";
+import SIPGDashboard from "./SIPGDashboard"
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 export default function App() {
 
-const [config,setConfig] = useState({})
+const [configPhy,setConfigPhy] = useState({})
+const [configDigi,setConfigdigi] = useState({})
 // let current_data: {} as any
 useEffect(()=>{
   axios.get('http://localhost:5000/current-gold-price').then(data => {
@@ -34,7 +36,7 @@ useEffect(()=>{
     last_10_24.push(Number(last_10[key][2]))
  });
  last_10_24 = last_10_24.slice(1)
-    setConfig({
+    setConfigPhy({
       components: [
         {
           type: 'KPI',
@@ -53,25 +55,6 @@ useEffect(()=>{
               },
               name: 'Last 6 months rate',
               data: last_10_22
-          }]
-        }
-        },
-        {
-          type: 'KPI',
-          cell: 'kpi-digigold-today',
-          value: digigold,
-          valueFormat: '{value}',
-          title: "Today's Digitial Gold Rate",
-          subtitle: "Last 10 day's rate",
-          chartOptions: {
-            series: [{
-              type: 'line',
-              enableMouseTracking: false,
-              dataLabels: {
-                  enabled: true
-              },
-              name: 'Last 6 months rate',
-              data: last_10_digigold
           }]
         }
         },
@@ -109,6 +92,28 @@ useEffect(()=>{
         }
       ]
     })
+    setConfigdigi(
+      {components: [
+      
+      {
+        type: 'KPI',
+        cell: 'kpi-digigold-today',
+        value: digigold,
+        valueFormat: '{value}',
+        title: "Today's Digitial Gold Rate",
+        subtitle: "Last 10 day's rate",
+        chartOptions: {
+          series: [{
+            type: 'line',
+            enableMouseTracking: false,
+            dataLabels: {
+                enabled: true
+            },
+            name: 'Last 6 months rate',
+            data: last_10_digigold
+        }]
+      }
+      }]})
   }).catch(error => {
     console.log(error)
   })
@@ -119,13 +124,24 @@ useEffect(()=>{
 
 
 
-console.log(config)
+// console.log(config)
   
   return (
     <div>
 
 <Navbar/>
-<Dashboard config={config} /> 
+<BrowserRouter>
+      <Routes>
+        <Route path="/physical_gold" element={<PhyGoldDashboard  config={configPhy}/>}>
+          </Route>
+          <Route path="/digital_gold" element={<DigiGoldDashboard  config={configDigi}/>}>
+          </Route>
+          <Route path="/sipg" element={<SIPGDashboard/>}>
+          </Route>
+          </Routes>
+          </BrowserRouter>
+
+
     </div>
   
 );

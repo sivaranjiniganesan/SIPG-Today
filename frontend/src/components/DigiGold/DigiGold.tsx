@@ -20,7 +20,7 @@ const DigiGold = (data: any) => {
             width: 850
         },
       title: {
-          text: `Gold Price in India ${data.data[1000]} (24K, 22K, 18K, 14K & 10K)`,
+          text: `Digital Gold Price in India ${data.data[1000]}`,
           align: 'center'
       },
      

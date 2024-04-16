@@ -140,10 +140,14 @@ h1#title {
   fill: var(--highcharts-color-2);
   stroke: var(--highcharts-color-2);
 }
-
-#kpi-gold-today .highcharts-dashboards-component-kpi-value::after,
 #kpi-digigold-today .highcharts-dashboards-component-kpi-value::after {
-  content: 'Per Gram(22K)';
+  content: 'Per Gram';
+  display: block;
+  font-size: 1rem;
+}
+#kpi-gold-today .highcharts-dashboards-component-kpi-value::after
+{
+    content: 'Per Gram(22K)';
   display: block;
   font-size: 1rem;
 }

@@ -20,7 +20,8 @@ const PhyGold = (datasource: any) => {
         width: 900
     },
   title: {
-      text: `Gold Price in India ${datasource.datasource[1000]} (24K, 22K, 18K, 14K & 10K)`,
+    // 
+      text: `Gold Price in India  ${datasource.datasource[1000]} (24K, 22K, 18K, 14K & 10K)`,
       align: 'center'
   },
  
