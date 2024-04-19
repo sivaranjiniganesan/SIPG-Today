@@ -2,25 +2,29 @@
   display: grid;
   padding-left: 527px;
   margin-top: 3%;
-  position: absolute;
+  /* position: absolute; */
 }
 
-#highest,#last {
+.highcharts-axis-line {
+  fill: none;
+  stroke: #3333330f!important;
+}
+#highest,#last,#on_day {
     font-family: Arial, Helvetica, sans-serif;
     border-collapse: collapse;
     width: 100%;
   }
   
-  #highest td, #highest th, #last td, #last th {
+  #highest td, #highest th, #last td, #last th, #on_day td, #on_day th {
     border: 1px solid #ddd;
     padding: 8px;
   }
   
-  #highest tr:nth-child(even),#last tr:nth-child(even){background-color: #f2f2f2;}
+  #highest tr:nth-child(even),#last tr:nth-child(even),#on_day tr:nth-child(even){background-color: #f2f2f2;}
   
-  #highest tr:hover, #last tr:hover {background-color: #ddd;}
+  #highest tr:hover, #last tr:hover,#on_day tr:hover {background-color: #ddd;}
   
-  #highest th,#last th {
+  #highest th,#last th ,#on_day th{
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;

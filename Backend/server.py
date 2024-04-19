@@ -6,9 +6,34 @@ import requests
 from bs4 import BeautifulSoup as soup
 import datetime 
 import time
+import json
 
 app = Flask(__name__)
 CORS(app)
+
+class RangeDict(dict):
+    def __getitem__(self, item):
+        if not isinstance(item, range): # or xrange in Python 2
+            for key in self:
+                if item in key:
+                    return self[key]
+            raise KeyError(item)
+        else:
+            return super().__getitem__(item) # or super(RangeDict, self) for Python 2
+
+color_bin = RangeDict({range(0,3000): '#ffffff', range(4500,4800): '#f6dfe5', range(4800,5000): '#f2d0d9'
+                       ,range(5000,5500): '#eec0cc', range(5500,5800): '#eab1c0',range(5800,6100): '#e5a1b3',
+                       range(6100,6400): '#e192a7', range(6400,6800): '#dd839b',range(6800,7100): '#d9738e',
+                       range(7100,7300): '#d46482',range(7300,7500): '#d05475',range(7500,8000): '#cc4569'})
+
+
+
+days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']
+def get_week(epoch):
+    
+    day = time.strftime('%A', time.localtime(epoch))
+    return days.index(day)
+
 def get_data(file):
     with open(file, 'r') as file:
         csv_reader = csv.DictReader(file)
@@ -181,19 +206,73 @@ def digital_gold_years():
 @app.route("/sipg-today/<type>/<int:date>")
 def sipg_today(date,type):
     if type == "physical_gold":
+        price_name = 'Gold Price(22 Karat)'
         file = "gold-price_epoch.csv"
+    else:
+        price_name = 'price'
+        file = "digital-gold.csv"
     df = pd.read_csv(file)
+
+    if type == "digital_gold":
+        df = df[df["Digital_Gold_Price"].str.contains("==Year") == False]
+        df[['date', 'price']] = df['Digital_Gold_Price'].str.rsplit('||', expand=True)
+        df = df.drop('Digital_Gold_Price', axis=1)
+        df["date"] = pd.to_numeric(df["date"])
 
     highest_since = df[df['date'] > date].max()
     highest_since['date'] = datetime.datetime.fromtimestamp(highest_since['date']).strftime('%Y-%m-%d')
 
+    
+    given_date = date
+    if len(df[df['date'] == given_date]) == 0:
+        date_one =  df[df['date'] > given_date].min()['date']
+        low = df[df['date'] == date_one].reset_index(drop=True)
+        low['day'] = "Price around the time you purchased"
+    else:
+        low = df[df['date'] == given_date].reset_index(drop=True)
+        low['day'] = "Price on the day you purchased"
+        
+    print(low)
+    low['date'] = low.date.apply(lambda d: datetime.datetime.fromtimestamp(int(d)).strftime("%Y-%m-%d"))
+     
+    
+    
+    
+
     new_df = df[df['date'] > date].reset_index(drop=True)
-    epoch_time = int(time.time())
+    # epoch_time = int(time.time())
     last_few_days = []
-    date_after = date+(30*84600) if date+(30*84600) < epoch_time else epoch_time
-    new_data = df[df["date"].between(date,date_after, inclusive = 'both')].reset_index(drop=True) 
-    # last_few_days['date'] = pd.to_datetime(last_few_days['date'], unit='s')
-   
+    # date_after = date+(30*84600) if date+(30*84600) < epoch_time else epoch_time
+    # new_data = df[df["date"].between(date,date_after, inclusive = 'both')].reset_index(drop=True) 
+    # # last_few_days['date'] = pd.to_datetime(last_few_days['date'], unit='s')
+
+    epoch_now = int(time.time())
+    last_60 = df[df["date"].between(epoch_now-(60*84600),epoch_now, inclusive = 'neither')].reset_index(drop=True)
+    high_date = last_60['date'].max()
+    high_60 = last_60[last_60['date'] == high_date]
+    heatmap_data = []
+    first_date = ""
+    for i,k in last_60.iterrows():
+        if first_date == "":
+            first_date = k['date'] + 86400
+            data_dump = {'date':datetime.datetime.fromtimestamp(k['date']).strftime('%Y-%m-%d'),'price':int(k[price_name]),'x':int(get_week(k['date'])),'color':color_bin[int(k[price_name])]}
+            heatmap_data.append(data_dump)
+        else:
+            
+            if k['date'] == first_date:
+                data_dump = {'date':datetime.datetime.fromtimestamp(k['date']).strftime('%Y-%m-%d'),'price':int(k[price_name]),'x':int(get_week(k['date'])),'color':color_bin[int(k[price_name])]} 
+                heatmap_data.append(data_dump)
+                first_date = first_date + 86400
+            else:
+                while k['date'] != first_date:
+                    data_dump = {'date':datetime.datetime.fromtimestamp(first_date).strftime('%Y-%m-%d'),'price':'','x':int(get_week(first_date)),'color':'#ffffff'}
+                    first_date = first_date + 86400
+                    heatmap_data.append(data_dump)
+                if  k['date'] == first_date:
+                    data_dump = {'date':datetime.datetime.fromtimestamp(k['date']).strftime('%Y-%m-%d'),'price':int(k[price_name]),'x':int(get_week(k['date'])),'color':color_bin[int(k[price_name])]} 
+                    first_date = first_date + 86400
+                    heatmap_data.append(data_dump)
+
     series_data = []
     for i in new_df.columns.tolist():
         
@@ -209,11 +288,43 @@ def sipg_today(date,type):
                 })      
             
     new_df["date"] = new_df.date.apply(lambda d: datetime.datetime.fromtimestamp(int(d)).strftime("%Y-%m-%d"))
+    # print(series_data)
+    if type == "digital_gold":
+        for index, row in new_df.iterrows():
+            last_few_days.append([row['date'],row['price']])
+    else:
+        for index, row in new_df.iterrows():
+            last_few_days.append([row['date'],row['Gold Price(24 Karat)'],row['Gold Price(22 Karat)'],row['Gold Price(18 Karat)'],row['Gold Price(14 Karat)'],row['Gold Price(10 Karat)']])
+        #  
+    if low[price_name][0] >= high_60[price_name].values[0]:
+        result = "Price seems to be lesser than the day you purchased"
+    else:
+        result = "Price seems to be higher than the day you purchased"
+
+    min_number = last_60[price_name].to_list()[0]
+    min_count = 0
+    min_date = 0
+
+
+    for key, value in last_60.iterrows():
+        
+        if value[price_name] < min_number:
+            
+            min_number = value[price_name]
+            min_date = value['date']
+            min_count = min_count + 1
+        else:
+            min_number = value[price_name]
+    if min_count == 0:
+        result += "...Also the price seems to be keep increasing for last 45days"
+        
+    else:
+        if min_count == 1:
+            result += "...Also the price seems to be fluctuating(Price is reduced once) in last 45days.."
+        else:  
+            result += "...Also the price seems to be fluctuating in last 45days..Price got reduced {0} times".format(str(min_count))
     
-    for index, row in new_df.iterrows():
-        last_few_days.append([row['date'],row['Gold Price(24 Karat)'],row['Gold Price(22 Karat)'],row['Gold Price(18 Karat)'],row['Gold Price(14 Karat)'],row['Gold Price(10 Karat)']])
-    print(last_few_days)
-    return [{"Linechart_data":series_data,'highest':highest_since.to_dict(),'last_few_days':last_few_days}]
+    return [{"Linechart_data":series_data, "on_price":low.to_dict(), 'highest':highest_since.to_dict(),'heatmap_data':heatmap_data,"result": result}]
 
 
 if __name__ == "__main__":

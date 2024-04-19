@@ -7,7 +7,7 @@ import DigiGoldDashboard from "./DigiGoldDashboard";
 import PhyGoldDashboard from "./PhyGoldDashboard";
 import SIPGDashboard from "./SIPGDashboard"
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
+import Heatmap from './Heatmap';
 export default function App() {
 
 const [configPhy,setConfigPhy] = useState({})
@@ -128,7 +128,6 @@ useEffect(()=>{
   
   return (
     <div>
-
 <Navbar/>
 <BrowserRouter>
       <Routes>

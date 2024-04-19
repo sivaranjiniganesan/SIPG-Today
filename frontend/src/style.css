@@ -136,10 +136,10 @@ h1#title {
   color: var(--highcharts-color-2);
 }
 
-#dashboard-col-1 .highcharts-color-0 {
+/* #dashboard-col-1 .highcharts-color-0 {
   fill: var(--highcharts-color-2);
   stroke: var(--highcharts-color-2);
-}
+} */
 #kpi-digigold-today .highcharts-dashboards-component-kpi-value::after {
   content: 'Per Gram';
   display: block;
