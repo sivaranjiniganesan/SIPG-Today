@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@fontsource/jura": "^5.0.19",
+    "@highcharts/dashboards": "^2.1.0",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -12,6 +13,7 @@
     "@types/react": "^18.2.75",
     "@types/react-dom": "^18.2.24",
     "axios": "^1.6.8",
+    "highcharts": "^11.4.1",
     "highcharts-react-official": "^3.2.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
