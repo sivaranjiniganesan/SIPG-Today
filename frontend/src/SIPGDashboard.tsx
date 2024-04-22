@@ -15,15 +15,6 @@ Dashboards.PluginHandler.addPlugin(Dashboards.HighchartsPlugin);
 Dashboards.PluginHandler.addPlugin(Dashboards.DataGridPlugin);
 
 export default function Dashboard() {
-//   const { config } = props;
-
-  
-//   useEffect(() => {
-//     Dashboards.board('sipg', config);
-//   }, [config]);
-
-  
- 
 
   return (
     <div id="sipg">

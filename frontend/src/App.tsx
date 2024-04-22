@@ -14,7 +14,7 @@ const [configPhy,setConfigPhy] = useState({})
 const [configDigi,setConfigdigi] = useState({})
 // let current_data: {} as any
 useEffect(()=>{
-  axios.get('http://localhost:5000/current-gold-price').then(data => {
+  axios.get('https://sipg-today.onrender.com/current-gold-price').then(data => {
     const outerHtmlElement: any = data.data[0];
     var Today_22_1 = outerHtmlElement.Today['22K Gold'][0];
     var Today_22_10 = outerHtmlElement.Today['22K Gold'][1];

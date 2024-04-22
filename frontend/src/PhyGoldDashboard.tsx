@@ -44,7 +44,7 @@ export default function Dashboard(props: any) {
  
   
   useEffect(()=>{
-    axios.get(`http://localhost:5000/gold-price/${year}`).then(data => {
+    axios.get(`https://sipg-today.onrender.com/gold-price/${year}`).then(data => {
       console.log(data)
       const data_dum = data.data
       data_dum[1000] = year

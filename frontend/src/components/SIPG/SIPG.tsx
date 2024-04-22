@@ -144,7 +144,7 @@ export default function SIPG() {
       },
   
       title: {
-          text: 'Gold Rate Variation in Last 45 days',
+          text: 'Gold Rate Variation in Last 2 months',
           align: 'center'
       },
       colorAxis: {    
@@ -395,7 +395,7 @@ export default function SIPG() {
         </label>
         </div>
         <div className='sipg-input4'>
-        <button className="find" type="button" onClick={() => seturl("http://localhost:5000/sipg-today/" + type + "/" + date)}>Find Out!!!</button>
+        <button className="find" type="button" onClick={() => seturl("https://sipg-today.onrender.com/sipg-today/" + type + "/" + date)}>Find Out!!!</button>
         </div>
         </div>
         <div className='sipg-ouput-segment'>
