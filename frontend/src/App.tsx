@@ -1,13 +1,13 @@
 import axios from 'axios'
 import React, { useState, useEffect} from 'react'
 import './style.css';
-import Dashboard from './Dashboard';
 import Navbar from './components/Navbar/Navbar';
 import DigiGoldDashboard from "./DigiGoldDashboard";
 import PhyGoldDashboard from "./PhyGoldDashboard";
 import SIPGDashboard from "./SIPGDashboard"
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Heatmap from './Heatmap';
+import "@fontsource/jura"
+
 export default function App() {
 
 const [configPhy,setConfigPhy] = useState({})
@@ -38,6 +38,7 @@ useEffect(()=>{
  last_10_24 = last_10_24.slice(1)
     setConfigPhy({
       components: [
+
         {
           type: 'KPI',
           cell: 'kpi-gold-today',
@@ -48,7 +49,7 @@ useEffect(()=>{
          
           chartOptions: {
             series: [{
-              type: 'line',
+              type: 'column',
               enableMouseTracking: false,
               dataLabels: {
                   enabled: true
@@ -57,6 +58,13 @@ useEffect(()=>{
               data: last_10_22
           }]
         }
+        },
+        {
+          cell: 'text-1',
+          type: 'KPI',
+          value: '22K',
+          valueFormat: '{value}',
+         
         },
         {
           cell: 'aaa',
@@ -71,6 +79,13 @@ useEffect(()=>{
           type: 'KPI',
           value: Today_22_10,
           title: '10gms',
+          valueFormat: '{value}',
+         
+        },
+        {
+          cell: 'text-2',
+          type: 'KPI',
+          value: '24K',
           valueFormat: '{value}',
          
         },
@@ -104,7 +119,7 @@ useEffect(()=>{
         subtitle: "Last 10 day's rate",
         chartOptions: {
           series: [{
-            type: 'line',
+            type: 'column',
             enableMouseTracking: false,
             dataLabels: {
                 enabled: true
@@ -127,7 +142,7 @@ useEffect(()=>{
 // console.log(config)
   
   return (
-    <div>
+    <div className='SIPG-App'>
 <Navbar/>
 <BrowserRouter>
       <Routes>

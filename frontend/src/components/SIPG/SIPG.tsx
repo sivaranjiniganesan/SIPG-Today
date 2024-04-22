@@ -138,6 +138,8 @@ export default function SIPG() {
       setheatmap({
         chart: {
           type: 'heatmap',
+          width:900,
+          height: 450,
           _styledMode: true
       },
   
@@ -211,8 +213,7 @@ export default function SIPG() {
           outside: true,
           zIndex: 20,
           headerFormat: '',
-          pointFormat: '{#unless point.custom.empty}{point.date:%A, %b %e, %Y}{/unless}',
-          nullFormat: 'No data'
+          pointFormat: '{point.date:%A, %b %e, %Y}',
       },
   
       xAxis: {
@@ -263,23 +264,24 @@ export default function SIPG() {
               enabled: true,
               format: '{point.value}',
               style: {
+                  color: 'black',
                   textOutline: 'none',
                   fontWeight: 'normal',
                   fontSize: '1rem'
               },
-              y: 4
+              y: 3
           },
           {
             enabled: true,
             align: 'center',
             verticalAlign: 'top',
             format: '{point.date: %b %e, %Y}',
-            backgroundColor: 'whitesmoke',
+            backgroundColor: '#b6406b',
             padding: 2,
             style: {
                 textOutline: 'none',
-                color: 'green',
-                fontSize: '0.8rem',
+                color: 'white',
+                fontSize: '0.7rem',
                 fontWeight: 'bold',
                 opacity: 0.5
             },
@@ -308,6 +310,7 @@ export default function SIPG() {
             { 
              chart: {
                zoomType: 'x'
+              
            },
            title: {
                text: 'Gold Rate Variation Since The Purchased',
@@ -367,6 +370,7 @@ export default function SIPG() {
   return (
     <div className='sipg'>
       <div className='sipg-input'>
+        <div className='style-sipg'>Choose the type</div>
       <div className='sipg-input1'>
         {choices.map((choice, index) => (
           <label key={index}>
@@ -381,158 +385,93 @@ export default function SIPG() {
         ))}
         </div>
         <div className='sipg-input2'>
-        <h3>When did you purchase last???</h3>
+        <h3>Pick the last time you purchased</h3>
         <input type="date" onChange={(event) => setdate(new Date(event.target.value).valueOf() / 1000)} />
         </div>
-        <div className='sipg-input2'>
+        <div className='sipg-input3'>
         <label>
           <input type="checkbox" checked={checked} onChange={handleChange} />
           Check this if never purchased before...
         </label>
         </div>
-        <div className='sipg-input2'>
+        <div className='sipg-input4'>
         <button className="find" type="button" onClick={() => seturl("http://localhost:5000/sipg-today/" + type + "/" + date)}>Find Out!!!</button>
         </div>
         </div>
+        <div className='sipg-ouput-segment'>
         {physhow ? <div className='sipg-output'>
-         
-                <div className='on_day'>
-          <text className='sipg-title'>{sameday}</text>
-          <table id="on_day">
-                <tr>
-                    <th>Date</th>
-                    <th>Gold Price(10 Karat)</th>
-                    <th>Gold Price(18 Karat)</th>
-                    <th>Gold Price(20 Karat)</th>
-                    <th>Gold Price(22 Karat)</th>
-                    <th>Gold Price(24 Karat)</th>
-                </tr>
-             
-                { day.map((val :any, key :any) => {
+          <div className='single_segment'>
+          <div className='today_price_segment'>
+          <text>{sameday}</text>
+          {day.map((val :any, key :any) => {
                     return (
-                        <tr>
-                           <td>{val['date'][0]}</td>
-                            <td>{val['Gold Price(10 Karat)'][0]}</td>
-                            <td>{val['Gold Price(14 Karat)'][0]}</td>
-                            <td>{val['Gold Price(18 Karat)'][0]}</td>
-                            <td>{val['Gold Price(22 Karat)'][0]}</td>
-                            <td>{val['Gold Price(24 Karat)'][0]}</td>
-                        </tr>
+                      <div className='today_price'>
+                           <span>{val['date'][0]}</span>
+                            <span>{val['Gold Price(22 Karat)'][0]}</span>
+                            </div>
                     )
                 })}
-                        
-                </table>
-                </div>
-                <div className='highest'>
-          <text className='sipg-title'>Highest Amount Since The Purchase</text>
-          <table id="highest">
-                <tr>
-                    <th>Date</th>
-                    <th>Gold Price(10 Karat)</th>
-                    <th>Gold Price(18 Karat)</th>
-                    <th>Gold Price(20 Karat)</th>
-                    <th>Gold Price(22 Karat)</th>
-                    <th>Gold Price(24 Karat)</th>
-                </tr>
-             
-                { high.map((val :any, key :any) => {
+         </div>
+         <div className='highest_price_segment'>
+          <text>Highest Price Since the Purchase</text>
+          { high.map((val :any, key :any) => {
                     return (
-                        <tr>
-                           <td>{val['date']}</td>
-                            <td>{val['Gold Price(10 Karat)']}</td>
-                            <td>{val['Gold Price(14 Karat)']}</td>
-                            <td>{val['Gold Price(18 Karat)']}</td>
-                            <td>{val['Gold Price(22 Karat)']}</td>
-                            <td>{val['Gold Price(24 Karat)']}</td>
-                        </tr>
+                      <div className='highest_price'>
+                           <span>{val['date']}</span>
+                            <span>{val['Gold Price(24 Karat)']}</span>
+                        </div>
                     )
                 })}
-                        
-                </table>
-                </div>
-                <div className='linechart'>
+         </div>
+          </div>
+          
+          <div className='linechart'>
                 <HighchartsReact highcharts={Highcharts} options={result} />
                 </div>
-              
-               
-                {/* <div className='last-content'>
-                <text className='sipg-title'>Gold Rate Variation 30days From The Purchase</text>
-                <table id="last">
-                <tr>
-                    <th>Date</th>
-                    <th>Gold Price(24 Karat)</th>
-                    <th>Gold Price(22 Karat)</th>
-                    <th>Gold Price(20 Karat)</th>
-                    <th>Gold Price(18 Karat)</th>
-                    <th>Gold Price(10 Karat)</th>
-                </tr>                                 
-                    {Object.values(last).map((val :any) => (
-                      <tr>
-                      {Object.values(val).map((newval :any) => (
-                        <td>{newval}</td>
-                      ))}
-                      </tr>
-                        ))}
-                 
-                </table>
-                </div> */}
+        
         </div> : null}
         {
           physhowsuggestion ? <div>
              <div className='heatmap'>
                 <HighchartsReact highcharts={Highcharts} options={heatmap} />
                 </div>
+                <div className='style-suggest'>Suggestion</div>
                 <div className='Result'>
                   <h1>{suggestion}</h1>
                 </div>
           </div>
           : null}
-       
         {
           digishow ? <div className='sipg-output'>
+          <div className='single_segment'>
+          <div className='today_price_segment'>
+          <text>{sameday}</text>
+          {day.map((val :any, key :any) => {
+                    return (
+                      <div className='today_price'>
+                           <span>{val['date'][0]}</span>
+                            <span>{val['price'][0]}</span>
+                            </div>
+                    )
+                })}
+         </div>
+         <div className='highest_price_segment'>
+          <text>Highest Price Since the Purchase</text>
+          { high.map((val :any, key :any) => {
+                    return (
+                      <div className='highest_price'>
+                           <span>{val['date']}</span>
+                            <span>{val['price']}</span>
+                        </div>
+                    )
+                })}
+         </div>
+          </div>
           
-                <div className='on_day'>
-          <text className='sipg-title'>{sameday}</text>
-          <table id="on_day">
-                <tr>
-                    <th>Date</th>
-                    <th>Gold Price</th>
-                </tr>
-             
-                { day.map((val :any, key :any) => {
-                    return (
-                        <tr>
-                           <td>{val['date'][0]}</td>
-                            <td>{val['price'][0]}</td>
-                        </tr>
-                    )
-                })}
-                        
-                </table>
-                </div>
-                <div className='highest'>
-          <text className='sipg-title'>Highest Amount Since The Purchase</text>
-          <table id="highest">
-                <tr>
-                    <th>Date</th>
-                    <th>Gold Price</th>
-                </tr>
-             
-                { high.map((val :any, key :any) => {
-                    return (
-                        <tr>
-                           <td>{val['date']}</td>
-                            <td>{val['price']}</td>
-                        </tr>
-                    )
-                })}
-                        
-                </table>
-                </div>
-                  <div className='linechart'>
+          <div className='linechart'>
                 <HighchartsReact highcharts={Highcharts} options={result} />
                 </div>
-             
+        
         </div> : null
         }
          {
@@ -540,12 +479,13 @@ export default function SIPG() {
                         <div className='heatmap'>
                             <HighchartsReact highcharts={Highcharts} options={heatmap} />
                             </div>
+                            <div className='style-suggest'>Suggestion</div>
                             <div className='Result'>
                             <h2>{suggestion}</h2>
                             </div>
                     </div>
                     : null}
-      
+        </div>
     </div>
   )
 }

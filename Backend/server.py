@@ -316,13 +316,13 @@ def sipg_today(date,type):
         else:
             min_number = value[price_name]
     if min_count == 0:
-        result += "...Also the price seems to be keep increasing for last 45days"
+        result += "...Also the price is keep increasing for last 2 months"
         
     else:
         if min_count == 1:
-            result += "...Also the price seems to be fluctuating(Price is reduced once) in last 45days.."
+            result += "...Also the price is fluctuating(Price is reduced once) in last 2 months.."
         else:  
-            result += "...Also the price seems to be fluctuating in last 45days..Price got reduced {0} times".format(str(min_count))
+            result += "...Also the price is fluctuating in last 2 months..Price got reduced {0} times".format(str(min_count))
     
     return [{"Linechart_data":series_data, "on_price":low.to_dict(), 'highest':highest_since.to_dict(),'heatmap_data':heatmap_data,"result": result}]
 

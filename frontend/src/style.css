@@ -1,15 +1,39 @@
 @import url('https://code.highcharts.com/css/highcharts.css');
 @import url('https://code.highcharts.com/dashboards/css/datagrid.css');
 @import url('https://code.highcharts.com/dashboards/css/dashboards.css');
+@import "./vars.css";
 
 body {
-  font-family: 'Helvetica Neue', Helvetica, 'Segoe UI', Arial, freesans,
-    sans-serif;
+  min-height: 100vh;
+  font-family: var(--font-all);
+  background: linear-gradient(180deg, #192A29 0%, #426969 100%);
+  background-repeat: no-repeat !important; 
+  overflow-x: hidden;
 }
 
+.highcharts-background {
+  fill: transparent !important;
+}
+
+.highcharts-data-label text, text.highcharts-data-label, .highcharts-title, .highcharts-axis-labels text,.highcharts-yaxis text
+{
+  fill:var(--font-color-all) !important;
+  font-family: var(--font-all) !important;
+}
+
+.highcharts-navigator-mask-inside {
+  fill: #66dcff !important;
+}
+.highcharts-credits{
+  display: none;
+}
 #container {
   padding: 10px;
   background-color: var(--highcharts-neutral-color-5);
+}
+
+.SIPG-App{
+  
 }
 
 .row {
@@ -27,7 +51,7 @@ body {
   position: relative;
   margin: 10px;
   background-clip: border-box;
-  background-color: var(--highcharts-background-color);
+  background-color: var(--background-all);
 }
 
 #kpi-wrapper {
@@ -57,30 +81,100 @@ body {
     flex-wrap: wrap;
  
 }
+#kpi-digigold-today .highcharts-dashboards-component-kpi-chart-container
+{
+height: 289px;
+margin-top: 112px;
+}
 
 #physical_gold .row{
   gap:2%;
+  padding-top: 4%;
+    padding-bottom: 5%;
 }
 #kpi-digigold-today{
-  width:100%
+  width:100%;
+  background: var(--background-all);
+  border-radius: var(--border-radius-all);
+  box-shadow: var(--box-shadow);
+}
+#dashboard-col-1{
+  background: var(--background-all);
+  /* border: var(--border-all); */
+  border-radius: var(--border-radius-all);
+  box-shadow: var(--box-shadow);
+  margin-top: 1%;
 }
 
-#aaa .highcharts-dashboards-component-kpi,#bbb .highcharts-dashboards-component-kpi{
-  background-color: var(--highcharts-background-color);
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 2px;
+#dashboard-col-0
+{
+
+    padding-left: 4%;
 }
+#dashboard-col-0{
+  background: var(--background-all);
+    /* border: var(--border-all); */
+    border-radius: var(--border-radius-all);
+    box-shadow: var(--box-shadow);
+    margin-right: 68px;
+    margin-left: 32px;
+    margin-top: 1%;
+   
+}
+.highcharts-button
+{
+  fill: #005F5C !important;
+}
+.highcharts-button text, .highcharts-legend-item text{
+  fill: var(--font-color-all) !important;
+  font-family: var(--font-all) !important;
+}
+
+#text-1, #text-2
+{
+  width: 50%;
+    margin-right: -31%;
+    margin-top: 36px;
+}
+.highcharts-label text
+{
+  fill: var(--font-color-all) !important;
+  font-family: var(--font-all) !important;
+}
+.highcharts-tooltip-box, .highcharts-label-box
+{
+  fill:#005F5C !important;
+}
+#aaa .highcharts-dashboards-component-kpi,#bbb .highcharts-dashboards-component-kpi, 
 #ccc .highcharts-dashboards-component-kpi,#ddd .highcharts-dashboards-component-kpi{
-  background-color: var(--highcharts-background-color);
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 2px;
-
+  background: var(--background-all);
+  /* border: var(--border-all); */
+  border-radius: var(--border-radius-all);
+  box-shadow: var(--box-shadow);
 }
+.highcharts-color-0 {
+  fill: #31b59a !important;
+}
+#wrapper{
+  background: var(--background-all);
+  /* border: var(--border-all); */
+  border-radius: var(--border-radius-all);
+  box-shadow: var(--box-shadow);
+  /* padding-top: 5%;
+    padding-bottom: 5%; */
+    padding-top: 6%;
+}
+
 #kpi-gold-today,
 #kpi-iron {
   flex-grow: 1;
-  width: 96%;
+  width: 99%;
   height: 300px;
+  margin-bottom: 5%;
+  background: var(--background-all);
+  /* border: var(--border-all); */
+  border-radius: var(--border-radius-all);
+  box-shadow: var(--box-shadow);
 }
 #dashboard-col-0{
   flex: 2 1;
@@ -170,15 +264,16 @@ h1#title {
   flex-direction: row;
     justify-content: center;
     flex: 0 3 21%;
-    background-color: rgb(157 113 146 / 16%);
 }
 #aaa,#bbb,#ccc,#ddd{
   width: 50%;
   height: fit-content;
+  padding-right: 2%;
 }
 
 .title{
-  background: linear-gradient(90deg, #07553E 0%, #061C16 98.5%);
+  /* background: linear-gradient(90deg, #07553E 0%, #061C16 98.5%); */
+  background: var(--background-all);
     border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 2px;
     width: 101.2%;
@@ -186,7 +281,7 @@ h1#title {
     padding-top: 1%;
     padding-bottom: 1%;
     margin-top: 2%;
-    font-family: monospace;
+    font-family: var(--font-all);
     font-style: normal;
     font-weight: 800;
     font-size: 30px;
@@ -199,17 +294,22 @@ h1#title {
   font-size: 1.5em;
 }
 
-/* .cell .highcharts-dashboards-component
-{
-  color: #f7f7f7;
-} */
+#aaa, #ccc {
+  padding-left: 24%;
+}
 .cell .highcharts-dashboards-component-title
 {
-  /* color: #f7f7f7; */
+  color: var(--font-color-all);
+  font-family: var(--font-all) !important;
   font-size: 20px;
   margin: 0.5em 2px;
 }
 
+.highcharts-dashboards-component
+{
+  color: var(--font-color-all) !important;
+  font-family: var(--font-all) !important;
+}
 
 @media (max-width: 992px) {
   .row {

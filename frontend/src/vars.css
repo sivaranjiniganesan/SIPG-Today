@@ -1,0 +1,20 @@
+:root {
+    /*Colours */
+    --background-all: linear-gradient(90deg, #002423 0%, #005F5C 100%);
+    --border-all: 1px solid #005F5C ;
+    --border-radius-all: 10px;
+    --box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+    /*Fonts*/
+    --font-all: "Jura";
+    --font-color-all: #F5F5F5;
+    /* --font-size: */
+    --font-weight-title: 700;
+    --font-size-title: 32px;
+
+    --font-weight-subs: 500;
+    --font-size-subs: 20px;
+
+
+
+}

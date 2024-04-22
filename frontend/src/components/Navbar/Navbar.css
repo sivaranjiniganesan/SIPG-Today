@@ -1,53 +1,67 @@
+@import "../../vars.css";
+
 .nav-content{
-    background: linear-gradient(90deg, #07553E 0%, #061C16 98.5%);
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 2px;
+    background: var(--background-all);
+    /* border: var(--border-all); */
+    border-radius: var(--border-radius-all);
+    box-shadow: var(--box-shadow);
+    display: flex;
+    gap: 9%;
+    margin-left: -1%;
+    margin-right: -1%;
+    margin-top: -1%;
+}
+
+.Text{
+    display: flex;
+    flex-direction: column;
+    margin-left: 5%;
+    margin-top: 2%;
+    width: 24%;
+    margin-bottom: 2%;
+}
+
+.nav-title{
+    font-family: var(--font-all);
+    font-style: normal;
+    color: var(--font-color-all);
+    font-weight: bolder;
+    font-size: var(--font-size-title);
+    line-height: 38px;
+}
+
+.nav-subtitle
+{
+    font-family: var(--font-all);
+    font-style: normal;
+    font-weight: bold;
+    font-size: var(--font-size-subs);
+    line-height: 24px;
+    color: var(--font-color-all);
+}
+
+.nav-buttons{
+    width: 50%;
+    margin-left: 19%;
+    margin-top: 2%;
+}
+
+.nav-buttons-items{
     display: flex;
     flex-direction: row;
-    gap: 34%;
-    }
+    gap: 9%;
+    width: 100%;
+    list-style: none;
+}
 
-    .nav-title{
-    font-family: monospace;
+.nav-buttons-items li a 
+{
+    font-family: var(--font-all);
     font-style: normal;
-    font-weight: 800;
-    font-size: 32px;
-    line-height: 39px;
-
-    color: #F5F5F5;
-    }
-
-    .nav-subtitle{
-    font-family: monospace;
-    font-style: italic;
-    font-weight: 500;
-    font-size: 20px;
-    line-height: 24px;
-
-    color: #F5F5F5;
-    }
-
-    .Text{
-        display: flex;
-        flex-direction: column;
-        padding-left: 5%;
-        padding-top: 2%;
-        padding-bottom: 2%;
-    }
-
-    .nav-buttons-items{
-        display: flex;
-        flex-direction: row;
-        gap: 5%;
-        width: 116%;
-        list-style: none;
-        padding-top: 7%;
-        padding-bottom: 2%;
-        
-    }
-    .nav-buttons-items li a{
-        text-decoration: none;
-        color: #F5F5F5;
-        font-family: math;
-        font-size: x-large;
-    }
+    font-weight: bold;
+    font-size: 25px;
+    line-height: 38px;
+    color: var(--font-color-all);
+    /* list-style: none; */
+    text-decoration: none;
+}

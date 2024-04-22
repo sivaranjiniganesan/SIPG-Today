@@ -16,8 +16,8 @@ const PhyGold = (datasource: any) => {
     cell: 'dashboard-col-0',
     type: 'Highcharts',
     chart:{
-        height: 530,
-        width: 900
+        height: 630,
+        width: 800
     },
   title: {
     // 

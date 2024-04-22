@@ -1,3 +1,5 @@
+@import "../../vars.css";
+
 .buttons-year{
     padding-bottom: 4%;
     padding-top: 2%;
@@ -8,10 +10,11 @@
 
 .year-button{
     border-style: hidden;
-    background: linear-gradient(90deg, #07553eb8 0%, #052e23e0 98.5%);
+    background: var(--background-all);
     border-radius: 10%;
     width: 5%;
     height: 32px;
     cursor:pointer;
-    color: #f5f5f5;
+    color: var(--font-color-all);
+    font-family: var(--font-all) !important;
 }

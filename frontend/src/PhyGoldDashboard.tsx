@@ -63,14 +63,19 @@ export default function Dashboard(props: any) {
       <Row>
         <div id="kpi-wrapper" className='row-1'>
           <Cell id="kpi-gold-today" />
+          <div id="wrapper">
           <div id="single-wrapper1">
+          <Cell id="text-1"/>
           <Cell id="aaa" />
           <Cell id="bbb" />
           </div>
           <div id="single-wrapper2">
+          <Cell id="text-2"/>
           <Cell id="ccc" />
           <Cell id="ddd" />
          </div>
+          </div>
+          
         </div>
         <div id="dashboard-col-0" className='row-1'>
         <div className='buttons-year'>
