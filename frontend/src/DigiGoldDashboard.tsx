@@ -1,7 +1,7 @@
 import React, { useEffect,useState } from 'react';
 import Highcharts from 'highcharts';
 import Dashboards from '@highcharts/dashboards';
-import DataGrid from '@highcharts/dashboards/datagrid';
+// import DataGrid from '@highcharts/dashboards/datagrid';
 import Row from './Row';
 import Cell from './Cell';
 import axios from 'axios';
@@ -10,7 +10,7 @@ import DigiGold from './components/DigiGold/DigiGold';
 
 
 Dashboards.HighchartsPlugin.custom.connectHighcharts(Highcharts);
-Dashboards.DataGridPlugin.custom.connectDataGrid(DataGrid);
+// Dashboards.DataGridPlugin.custom.connectDataGrid(DataGrid);
 
 Dashboards.PluginHandler.addPlugin(Dashboards.HighchartsPlugin);
 Dashboards.PluginHandler.addPlugin(Dashboards.DataGridPlugin);
