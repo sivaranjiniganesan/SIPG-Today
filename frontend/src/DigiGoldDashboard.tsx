@@ -10,7 +10,7 @@ import DigiGold from './components/DigiGold/DigiGold';
 
 
 Dashboards.HighchartsPlugin.custom.connectHighcharts(Highcharts);
-Dashboards.DataGridPlugin.custom.connectDataGrid(DataGrid);
+// Dashboards.DataGridPlugin.custom.connectDataGrid(DataGrid);
 
 Dashboards.PluginHandler.addPlugin(Dashboards.HighchartsPlugin);
 Dashboards.PluginHandler.addPlugin(Dashboards.DataGridPlugin);
