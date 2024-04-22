@@ -11,3 +11,4 @@ pandas
 bs4
 datetime
 times
+requests
