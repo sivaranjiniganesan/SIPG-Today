@@ -143,9 +143,13 @@ useEffect(()=>{
   
   return (
     <div className='SIPG-App'>
+
 <Navbar/>
+
 <BrowserRouter>
       <Routes>
+      <Route path="/" element={<PhyGoldDashboard  config={configPhy}/>}>
+          </Route>
         <Route path="/physical_gold" element={<PhyGoldDashboard  config={configPhy}/>}>
           </Route>
           <Route path="/digital_gold" element={<DigiGoldDashboard  config={configDigi}/>}>
