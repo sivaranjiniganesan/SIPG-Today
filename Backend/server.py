@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup as soup
 import datetime 
 import time
 import json
+from re import sub
 
 app = Flask(__name__)
 CORS(app)
@@ -74,12 +75,18 @@ def get_gold_price(file,year):
 
 def current_gold_rate(type):
 
-    def find_value(value):
-        for ran in range(len(value)):
-            if ran == 0 or ran == 1:
-                gold_Rate_dict['22K Gold'].append(value[ran].replace("₹","").replace(",","").replace(".00",""))
-            elif ran == 2 or ran == 3:
-                gold_Rate_dict['24K Gold'].append(value[ran].replace("₹","").replace(",","").replace(".00",""))
+    def find_value(id):
+        gold_rate_table = page_soup.find('div', {'id': id})
+        count = 1
+        for i in gold_rate_table.find_all('td',{'class':'rate'}):
+            if count == 3:
+                today_gold_rate = i.text
+            count = count + 1
+        if id == "tab_kunit_24":
+            gold_Rate_dict['24K Gold'] = today_gold_rate.replace("₹","").replace(",","").replace(".00","")
+        else:
+          gold_Rate_dict['22K Gold'] =  today_gold_rate.replace("₹","").replace(",","").replace(".00","")
+
     if type == "digigold_last_10":
         last10_digi_gold = []
         test_new_list = get_gold_price("digital-gold.csv","==Year 2024==")[0]["data"]
@@ -96,7 +103,7 @@ def current_gold_rate(type):
         if type == "digital_gold_today":
             url = "https://www.mmtcpamp.com/digital-gold"
         else:
-            url = "https://www.iifl.com/gold-rates-today/gold-rate-chennai"
+            url = "https://www.exchange-rates.org/precious-metals/gold-price/india/2024"
         req = requests.get(url)
         req.raise_for_status()
 
@@ -107,25 +114,40 @@ def current_gold_rate(type):
         
         else:
             gold_Rate_dict = {}
-            for val in page_soup.find_all('h4', {'class': 'gold-rate-box__title mb-0'}):
-                gold_Rate_dict[val.text] = []
-
-
+            gold_Rate_dict['24K Gold'] = []
+            gold_Rate_dict['22K Gold'] = []
             
-            price = [i.text for i in  page_soup.find_all('span', {'class': 'd-block fw-500 text-truncate'})]
-            # change = [i.text.replace("\n","").replace("\u200c","").strip() for i in  page_soup.find_all('span', {'class': 'gold-rate-box__trends-up'})]
-
-            find_value(price)
+            find_value('tab_kunit_24')
+            find_value('tab_kunit_22')
             # find_value(change)
+            data = []
             last_10_data = []
-            table = page_soup.find_all('table')[2]
+            url = "https://www.exchange-rates.org/precious-metals/gold-price/india/2024"
+            req = requests.get(url)
+            req.raise_for_status()
+            new_data = []
+            # create Soup
+            page_soup = soup(req.text, 'html.parser')
+            table = page_soup.find('table', attrs={'class':'metal-history-table'})
             table_body = table.find('tbody')
-
             rows = table_body.find_all('tr')
             for row in rows:
-                cols = row.find_all('td')
-                cols = [ele.text.strip().replace("\n","").replace("\t","").replace("₹","").replace(",","") for ele in cols]
-                last_10_data.append([ele for ele in cols if ele]) 
+                new = []
+            # #         if row.has_attr("class"):
+            #         if row.has_attr("class") 'month-row-bottom' not in row['class']:
+                cols = row.find_all('td',{'class':'rate'})
+
+                for ele in reversed(cols):
+                    new.append(round(float(sub(r'[^\d.]', '', ele.text.strip()))/31.1035))
+                new_data.append(new)
+                
+            # print(new_data)
+            count = 0
+            for row in reversed(new_data):
+            #     print(row[])
+                if count <= 11 and len(row) > 0:
+                    last_10_data.append(row[3])
+                count = count + 1
            
 
     if type == "today":
@@ -143,7 +165,7 @@ def current_gold():
         last_10 = current_gold_rate("last_10_days")
         digigold_today = current_gold_rate("digital_gold_today")
         digigold_last_10 = current_gold_rate("digigold_last_10")
-        return [{"Today":today,"last_10_days":last_10,"digigold_today":round(float(digigold_today)),"digigold_last_10": digigold_last_10}]
+        return [{"Today":today, "last_10_days":last_10, "digigold_today":round(float(digigold_today)),"digigold_last_10": digigold_last_10}]
 
 @app.route("/digital-gold-price/2024")
 def digital_gold_price_2024():

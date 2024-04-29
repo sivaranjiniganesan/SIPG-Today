@@ -14,28 +14,29 @@ const [configPhy,setConfigPhy] = useState({})
 const [configDigi,setConfigdigi] = useState({})
 // let current_data: {} as any
 useEffect(()=>{
-  axios.get('https://sipg-today.onrender.com/current-gold-price').then(data => {
+  axios.get('http://localhost:5000/current-gold-price').then(data => {
     const outerHtmlElement: any = data.data[0];
-    var Today_22_1 = outerHtmlElement.Today['22K Gold'][0];
-    var Today_22_10 = outerHtmlElement.Today['22K Gold'][1];
-    var Today_24_1 = outerHtmlElement.Today['24K Gold'][0];
-    var Today_24_10 = outerHtmlElement.Today['24K Gold'][1];
+    var Today_22_1 = outerHtmlElement.Today['22K Gold'];
+    var Today_22_10 = outerHtmlElement.Today['22K Gold'] * 10;
+    var Today_24_1 = outerHtmlElement.Today['24K Gold'];
+    var Today_24_10 = outerHtmlElement.Today['24K Gold'] * 10;
     let last_10: any = outerHtmlElement.last_10_days
     var digigold = outerHtmlElement.digigold_today
     var last_10_digigold = outerHtmlElement.digigold_last_10
     let last_10_22: any = []
     let last_10_24: any = []
-    console.log(last_10)
-    Object.keys(last_10).map(key => {
-      last_10_22.push(Number(last_10[key][1]))
-   });
-   console.log(last_10_22)
-  //  last_10_22 = last_10_22.slice(1)
-   console.log(last_10_digigold)
-   Object.keys(last_10).map(key => {
-    last_10_24.push(Number(last_10[key][2]))
- });
- last_10_24 = last_10_24.slice(1)
+    console.log("Today_22_1")
+    console.log(Today_22_1)
+//     Object.keys(last_10).map(key => {
+//       last_10_22.push(Number(last_10[key][1]))
+//    });
+//    console.log(last_10_22)
+//   //  last_10_22 = last_10_22.slice(1)
+//    console.log(last_10_digigold)
+//    Object.keys(last_10).map(key => {
+//     last_10_24.push(Number(last_10[key][2]))
+//  });
+//  last_10_24 = last_10_24.slice(1)
     setConfigPhy({
       components: [
 
@@ -55,7 +56,7 @@ useEffect(()=>{
                   enabled: true
               },
               name: 'Last 6 months rate',
-              data: last_10_22
+              data: last_10
           }]
         }
         },
